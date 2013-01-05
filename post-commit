@@ -1,0 +1,12 @@
+#!/bin/sh
+TOKEN=""
+
+PROJECT_ID=""
+
+MESSAGE=$(git log -1 HEAD --pretty=format:%s)
+
+STORY_ID=$(git log -1 HEAD --pretty=format:%s | tr -cd [:digit:])
+
+curl -H "X-TrackerToken: $TOKEN" -X POST -H "Content-type: application/xml" \
+-d "<note><text>$MESSAGE</text></note>" \
+http://www.pivotaltracker.com/services/v3/projects/$PROJECT_ID/stories/$STORY_ID/notes
